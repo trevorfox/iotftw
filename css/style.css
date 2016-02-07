@@ -1,0 +1,22 @@
+.centered {
+ text-align: center;
+}
+
+.stacked {
+ margin-bottom: 20px;
+}
+.go-btn { 
+  color: #ffffff; 
+  background-color: #D61906;
+  padding-bottom: 20px;
+} 
+ 
+.go-btn:hover, 
+.go-btn:focus, 
+.go-btn:active, 
+.go-btn.active, 
+.open .dropdown-toggle.go-btn { 
+  color: #ffffff; 
+  background-color: #FF230F; 
+} 
+ 
