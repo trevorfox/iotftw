@@ -30,7 +30,7 @@ function entertain(){
   var idea = new Idea();
  
   $("#quote h3").first().text(idea.phrase);
-  $('.twitter-share-button').attr('data-text', '"' + idea.phrase + '" More from the future of #IoT at ');
+  $('.twitter-share-button').attr('data-text', '"' + idea.phrase + '" And more from the future of #IoT at ');
 
   $.getJSON(giphyAPI + idea.thingSearch1, function(giphy1) {
     if( giphy1.data.image_url !== undefined){

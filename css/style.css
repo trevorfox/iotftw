@@ -24,4 +24,7 @@ img.giphy {
   color: #ffffff; 
   background-color: #FF230F; 
 } 
- 
+
+#props {
+	margin-top: 60px;
+}
