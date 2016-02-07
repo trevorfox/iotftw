@@ -1,3 +1,7 @@
+img.giphy {
+	max-width: 50%;
+}
+
 .centered {
  text-align: center;
 }
@@ -5,6 +9,7 @@
 .stacked {
  margin-bottom: 20px;
 }
+
 .go-btn { 
   color: #ffffff; 
   background-color: #D61906;

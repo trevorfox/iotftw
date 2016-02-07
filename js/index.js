@@ -1,14 +1,13 @@
 var giphyAPI = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="
+var gifHeights = [,];
 
 function Idea(){
-  var things = [['cloud service','distributed database','wearable shirt','shoe insole'], 
-                ['cloud service', 'beer coaster','distributed database','wearable shirt','Bitcoin','frat guy','air conditioner','wallet', 'shoe insole']];
-  var connectors = ['talks to', 'mines', 'turks','talks to', 'push messages', 'indexes', 'interfaces with', 'that has an API for', 'predicts'];
-  
+  var things = [['cloud service', 'the new silk road', 'golf cart', 'prothstetic arm', 'doorbell', 'distributed database','shirt','shoe insole', 'a turker', 'GoPro camera', 'bicycle helmet'], 
+                ['beer coaster','distributed database', 'pant','Bitcoin','frat guy','air conditioner','wallet', 'barista', 'shoe insole','baby monitor', 'pug', "45'", 'your closet']];
+  var connectors = ['talks to', 'mines','talks to', 'push messages', 'indexes', 'interfaces with', 'has an API for', 'predicts', 'listens for']; 
   this.randomThing = function(arr){
     return arr[Math.floor(Math.random()* arr.length)];
   }
-
   this.thing1 = this.randomThing(things[0]);
   this.thing2 = this.randomThing(things[1]);
   this.thingSearch1 = this.thing1.split(' ').join('+');
@@ -17,27 +16,49 @@ function Idea(){
   this.phrase = "It's a " + this.thing1 + " that "  + this.connector + " " + this.thing2 + "s.";
 }
 
+function getCatGif(index){  
+  $.getJSON(giphyAPI + "lolcat", function(giphy) {
+    var gifSrc = giphy.data.image_url; 
+    $('#magic').append('<img class="giphy" src="' + gifSrc + '"/>');
+    gifHeights[index] = Number(giphy.data.image_height);
+  });
+}
+
 function entertain(){
 
+  $('#magic img').remove();
   var idea = new Idea();
-  console.log(idea.thing1)
-  console.log(idea.thing2)
-  
-  $("#magic h3").first().text(idea.phrase);
+ 
+  $("#quote h3").first().text(idea.phrase);
+  $('.twitter-share-button').attr('data-text', '"' + idea.phrase + '" More from the future of #IoT at ');
 
-  $.getJSON(giphyAPI + idea.searchString1, function(giphy) {
-    var gifsrc = giphy.data.image_url  // SOLVE BROKEN IMAGE PROBLEM
-    $('#magic').prepend('<img class="giphy" src="' + gifsrc + '"/>')
+  $.getJSON(giphyAPI + idea.thingSearch1, function(giphy1) {
+    if( giphy1.data.image_url !== undefined){
+      $('#magic').append('<img class="giphy" src="' + giphy1.data.image_url + '"/>');
+      gifHeights[0] = Number(giphy1.data.image_height);
+    }  else {
+      getCatGif(0);
+    }
+
+    $.getJSON(giphyAPI + idea.thingSearch2, function(giphy2) {
+        if( giphy2.data.image_url !== undefined){
+          $('#magic').append('<img class="giphy" src="' + giphy2.data.image_url + '"/>');
+          gifHeights[1] = Number(giphy2.data.image_height);
+        }  else {
+          getCatGif(1);
+      }
+      
+      // determine shortest gif height and set both gifs to that height
+      var shortest = Math.min.apply(null, gifHeights);
+      console.log(gifHeights)
+      console.log(shortest)
+      $("img.giphy").css('max-height',shortest);
+
+    });
   });
-
-  $.getJSON(giphyAPI + idea.searchString2, function(giphy) {
-    var gifsrc = giphy.data.image_url  // SOLVE BROKEN IMAGE PROBLEM
-    $('#magic').prepend('<img class="giphy" src="' + gifsrc + '"/>')
-  });
-
 }
 
 $(document).ready(function() {
-  $('magic img').remove();
+  entertain();
   $(".go-btn").click(entertain);
 });
