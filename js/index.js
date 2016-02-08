@@ -1,10 +1,11 @@
 var giphyAPI = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="
 var gifHeights = [,];
+var firstIdea = true;
 
 function Idea(){
-  var things = [['cloud service', 'the new silk road', 'golf cart', 'prothstetic arm', 'doorbell', 'distributed database','shirt','shoe insole', 'a turker', 'GoPro camera', 'bicycle helmet'], 
+  var things = [['cloud service', 'the new silk road', 'golf cart', 'prothstetic arm', 'doorbell', 'distributed database','shirt','shoe insole', 'turker', 'GoPro camera', 'bicycle helmet'], 
                 ['beer coaster','distributed database', 'pant','Bitcoin','frat guy','air conditioner','wallet', 'barista', 'shoe insole','baby monitor', 'pug', "45'", 'your closet']];
-  var connectors = ['talks to', 'mines','talks to', 'push messages', 'indexes', 'interfaces with', 'has an API for', 'predicts', 'listens for']; 
+  var connectors = ['talks to', 'data mines','talks to', 'push messages', 'indexes', 'interfaces with', 'has an API for', 'predicts', 'listens for']; 
   this.randomThing = function(arr){
     return arr[Math.floor(Math.random()* arr.length)];
   }
@@ -26,11 +27,17 @@ function getCatGif(index){
 
 function entertain(){
 
-  $('#magic img').remove();
   var idea = new Idea();
- 
   $("#quote h3").first().text(idea.phrase);
-  $('.twitter-share-button').attr('data-text', '"' + idea.phrase + '" And more from the future of #IoT at ');
+
+  if (!firstIdea){
+    $('#magic img').remove();
+    $("#social").empty();
+  }
+
+  firstIdea = false;
+
+  // load two gifs that hopefully have something to do with the idea
 
   $.getJSON(giphyAPI + idea.thingSearch1, function(giphy1) {
     if( giphy1.data.image_url !== undefined){
@@ -49,12 +56,32 @@ function entertain(){
       }
       
       // determine shortest gif height and set both gifs to that height
-      var shortest = Math.min.apply(null, gifHeights);
-      console.log(gifHeights)
-      console.log(shortest)
-      $("img.giphy").css('max-height',shortest);
 
+      var shortest = Math.min.apply(null, gifHeights);
+      $("img.giphy").css('max-height',shortest);
     });
+  });
+
+  // refresh the tweet button
+
+  twttr.ready(function (twttr) {
+    twttr.widgets.createShareButton(
+      document.URL,
+      document.getElementById('social'),
+      { 
+        size: "large",
+        text: '"' + idea.phrase + '" And more from the future of #IoT at ',
+        related: "realtrevorfaux",
+        hashtags: "IoTftw"
+      }
+    );
+  });
+  
+  // GTM event
+
+  dataLayer.push({
+    event: 'ideate',
+    idea : idea
   });
 }
 

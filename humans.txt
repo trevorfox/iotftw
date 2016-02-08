@@ -3,11 +3,12 @@
 
 # TEAM
 
-    <name> -- <role> -- <twitter>
+    Trevor -- Made this -- @realTrevorFaux
 
 # THANKS
 
-    <name>
+    Free Code Camp
+    Giphy
 
 # TECHNOLOGY COLOPHON
 

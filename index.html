@@ -94,18 +94,35 @@
     </div>
     <div class="row">
       <div class="centered" id="social">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="iotftw">Tweet it!</a>
+       <!-- <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="iotftw">Tweet it!</a>-->
       </div>
     </div>
      <div class="row stacked"> 
       <div class="col-md-8 col-md-offset-4" id="props">
-        <p>Powered by <a href="http://www.giphy.com">Giphy</a>, props to <a href="http://www.freecodecamp.com">Free Code Camp</a> and <a href="http://itsthisforthat.com/"> these guys.</a> </p>
+        <p>Powered by <a href="http://www.giphy.com">Giphy</a>. Props to <a href="http://www.freecodecamp.com">Free Code Camp</a> and <a href="http://itsthisforthat.com/"> these guys.</a>
+        </p>
       </div>
     </div>
   </div>
     <!-- /container -->
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  <script>
+    window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+      return t; 
+    }(document, "script", "twitter-wjs"));
+  </script>
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <!--<script src="http://platform.twitter.com/widgets.js"></script>-->
   <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
   <script src="js/index.js"></script>  
   </body>
